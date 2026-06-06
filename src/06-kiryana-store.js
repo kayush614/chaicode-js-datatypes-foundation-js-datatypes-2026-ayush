@@ -40,9 +40,9 @@
  *                 => [{name:"Atta",price:40},{name:"Ghee",price:500}]
  *
  *   5. formatBill(items)
- *      - .map() se har item ko "name x qty = Rs.total" format karo
+ *      - .map() se har item ko "name x qrty = Rs.total" format karo
  *      - Phir .join("\n") se multi-line bill banao
- *      - Agar items array nahi hai ya empty hai, return ""
+ *      - Agar items array nahi hai ya empty hai, retun ""
  *      - Example: formatBill([{name:"Atta",price:40,qty:2}]) => "Atta x 2 = Rs.80"
  *
  * @example
@@ -51,21 +51,61 @@
  *   formatBill([{name:"Atta",price:40,qty:2}]) // => "Atta x 2 = Rs.80"
  */
 export function getItemNames(items) {
-  // Your code here
+  if (!Array.isArray(items) || items.length === 0) {
+    return [];
+  }
+  return items.map(function (item) {
+    return item.name;
+  });
 }
 
 export function getAffordableItems(items, maxPrice) {
   // Your code here
+  if (!Array.isArray(items) || items.length === 0) {
+    return [];
+  }
+  return items.filter(function (item) {
+    return item.price <= maxPrice;
+  });
 }
 
 export function calculateTotal(items) {
-  // Your code here
+  if (!Array.isArray(items) || items.length === 0) {
+    return 0;
+  }
+  let amounts = items.map(function (item) {
+    return item.price * item.qty;
+  });
+
+  return amounts.reduce((total, amount) => {
+    return total + amount;
+  }, 0);
 }
 
 export function sortByPrice(items, ascending) {
-  // Your code here
+  if (!Array.isArray(items) || items.length === 0) {
+    return [];
+  }
+  let sortedItems = [...items];
+
+  if (!ascending) {
+    sortedItems.sort(function (a, b) {
+      return b.price - a.price;
+    });
+  } else {
+    sortedItems.sort(function (a, b) {
+      return a.price - b.price;
+    });
+  }
+  return sortedItems;
 }
 
 export function formatBill(items) {
-  // Your code here
+  if (!Array.isArray(items) || items.length === 0) {
+    return "";
+  }
+  let bill = items.map(function (item) {
+    return `${item.name} x ${item.qty} = Rs.${item.price * item.qty}`;
+  });
+  return bill.join("\n");
 }
