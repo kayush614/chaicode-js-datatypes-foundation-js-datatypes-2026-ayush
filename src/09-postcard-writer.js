@@ -27,7 +27,7 @@
  *      - Example: isValidPincode("012345") => false
  *
  *   3. formatPostcardField(label, value, width)
- *      - label.padEnd(width) + ": " + value — for aligned fields
+ *      - label.padEnd(width) + : "" + value — for aligned fields
  *      - Wait, let me simplify: return label.padEnd(12) + ": " + value
  *      - Agar width provided, use that instead of 12
  *      - Agar label ya value string nahi hai, return ""
@@ -52,21 +52,58 @@
  *   countVowels("Namaste")     // => 3
  */
 export function writePostcard(sender, receiver, message) {
-  // Your code here
+  if (
+    typeof sender !== "string" ||
+    typeof receiver !== "string" ||
+    typeof message !== "string" ||
+    sender.trim().length === 0 ||
+    receiver.trim().length === 0 ||
+    message.trim().length === 0
+  ) {
+    return "";
+  }
+
+  return `Priy ${receiver.trim()},\n\n${message.trim()}\n\nAapka/Aapki,\n${sender.trim()}`;
 }
 
 export function isValidPincode(code) {
-  // Your code here
+  if (
+    typeof code != "string" ||
+    code[0] == 0 ||
+    !code.match(/^\d+$/) ||
+    code.length !== 6
+  ) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 export function formatPostcardField(label, value, width) {
-  // Your code here
+  if (typeof label !== "string" || typeof value !== "string") {
+    return "";
+  }
+  if (width === undefined) {
+    return label.padEnd(12, " ") + ": " + value;
+  }
+  return label.padEnd(width, " ") + ": " + value;
 }
 
 export function isFromState(address, stateCode) {
-  // Your code here
+  if (
+    typeof address !== "string" ||
+    address.length === 0 ||
+    typeof stateCode !== "string" ||
+    stateCode.length === 0
+  ) {
+    return false;
+  }
+  return address.endsWith(stateCode);
 }
 
 export function countVowels(message) {
-  // Your code here
+  if (typeof message !== "string" || message.match(/[aeiouAEIOU]/g) === null) {
+    return 0;
+  }
+  return message.match(/[aeiouAEIOU]/g).length;
 }
